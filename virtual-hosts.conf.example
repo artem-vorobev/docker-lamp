@@ -1,0 +1,32 @@
+# This is an example. Put here real data and place this file in directory you
+# specified in WEBDEV_FOLDER constant of .env file.
+
+<VirtualHost *:80>
+  # Choose virtual host name. Make this name points to the address 127.0.0.1
+  # For example you can edit your hosts file
+  # https://www.howtogeek.com/howto/27350/beginner-geek-how-to-edit-your-hosts-file/
+
+  # If you are on Linux on on MacOS use "dnsmasq" for mapping whole DNS zone to
+  # localhost. It is better than edit hosts file because you should edit hosts
+  # each time when you create new virtual host.
+  # https://en.wikipedia.org/wiki/Dnsmasq
+
+  # There are also several alternatives of "dnsmasq" for Windows
+  # https://alternativeto.net/software/dnsmasq/?platform=windows 
+  ServerName something.local
+
+
+
+  # Put here path to your application. Don't forget that your webdev folder on
+  # your computer is mapped to /www inside PHP and Apache containers, so this
+  # path will be retrieving in container's filesystem rather in your filesystem.
+  DocumentRoot /www/your-application
+
+
+
+  # Turn on PHP if needed. This option will proxy all ".php" requests to the
+  # selected PHP container. All containers listen port 9000, and hostname
+  # depends on which version of php you want to use. Example below turns on
+  # php7.0 for your app.
+  ProxyPassMatch ^/(.*\.php)$ fcgi://php70:9000/www/your-application/$1
+</VirtualHost>
